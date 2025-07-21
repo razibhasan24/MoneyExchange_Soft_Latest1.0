@@ -20,9 +20,9 @@ class PurchaseController extends Controller
 
     public function create()
     {
-        $agents = \App\Models\Agent::all();
-        $statuses = \App\Models\Status::all();
-        $currencies=\App\Models\Currency::all();
+        $agents = Agent::all();
+        $statuses = Status::all();
+        $currencies=Currency::all();
 
         return view('pages.purchases.create', [
             'mode' => 'create',
@@ -36,51 +36,12 @@ class PurchaseController extends Controller
 
     public function store(Request $request)
     {
-
-
-        $purchase =new Purchase();
-        $purchase->agent_id=$request->agent_id;
-        $purchase->status_id=$request->status_id;
-        $purchase->purchase_date=$request->purchase_date;
-        $purchase->remarks=$request->remarks;
-        $purchase->purchase_total=$request->purchase_total;
-        $purchase->save();
-
-
-         $items=$request->items;
-
-       foreach ($items as $item) {
-        $details=new PurchaseDetail();
-        $details->purchase_id=$purchase->id;
-        $details->currency_id=$item['currency_id'];
-        $details->qty=$item['qty'];
-        $details->rate=$item['rate'];
-        $details->vat=$item['vat'];
-        $details->save();
-
-
-
-        $stocks=new MoneyStock();
-        $stocks->purchase_id=$purchase->id;
-        $stocks->currency_id=$item['currency_id'];
-        $stocks->qty=$item['qty'];
-        $stocks->transaction_type="IN";
-        $stocks->remarks=$item['remarks'];
-        $stocks->save();
-
-
-
-      }
-
-
-       return response()->json($purchase);
-
-        // $data = $request->all();
-        // if ($request->hasFile('photo')) {
-        //     $data['photo'] = $request->file('photo')->store('uploads', 'public');
-        // }
-        // Purchase::create($data);
-        // return redirect()->route('purchases.index')->with('success', 'Successfully created!');
+        $data = $request->all();
+        if ($request->hasFile('photo')) {
+            $data['photo'] = $request->file('photo')->store('uploads', 'public');
+        }
+        Purchase::create($data);
+        return redirect()->route('purchases.index')->with('success', 'Successfully created!');
     }
 
     public function show(Purchase $purchase)

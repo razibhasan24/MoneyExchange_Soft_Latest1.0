@@ -23,3 +23,6 @@ Route::resource('statuses', App\Http\Controllers\StatusController::class);
 Route::resource('orders', App\Http\Controllers\OrderController::class);
 Route::resource('order_details', App\Http\Controllers\OrderDetailController::class);
 Route::resource('money_stocks', App\Http\Controllers\MoneyStockController::class);
+
+Route::resource('money_receipts', App\Http\Controllers\MoneyReceiptController::class);
+Route::resource('money_receipt_details', App\Http\Controllers\MoneyReceiptDetailController::class);
