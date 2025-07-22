@@ -185,6 +185,7 @@
 </style>
 
 
+<div style="max-width: 70vw; margin: 0 auto;" class="container my-5 py-3">
 <!-- ========== Header ========== -->
 <!-- ========== Header with Logo ========== -->
 <header class="header_all">
@@ -345,6 +346,7 @@
         </div>
     </div>
 </footer>
+
 <script>
     const items = [];
 
@@ -452,6 +454,7 @@
         }
     });
 </script>
+</div>
 
 
 

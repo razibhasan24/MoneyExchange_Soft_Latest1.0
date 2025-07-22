@@ -110,7 +110,10 @@
                           <a href="{{url("/money_receipts")}}">Manage MR</a>
                       </li>
                       <li>
-                          <a href="mail_compose.html">Compose mail</a>
+                          <a href="/invoices/create">Create Invoice</a>
+                      </li>
+                      <li>
+                          <a href="{{ url('/invoices') }}">Manage Invoice</a>
                       </li>
                   </ul>
               </li>

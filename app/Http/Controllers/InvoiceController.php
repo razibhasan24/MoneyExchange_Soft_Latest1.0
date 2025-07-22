@@ -18,11 +18,13 @@ class InvoiceController extends Controller
     public function create()
     {
         $customers = \App\Models\Customer::all();
+        $statuses = \App\Models\Status::all();
 
         return view('pages.invoices.create', [
             'mode' => 'create',
             'invoice' => new Invoice(),
             'customers' => $customers,
+            'statuses'=> $statuses,
 
         ]);
     }

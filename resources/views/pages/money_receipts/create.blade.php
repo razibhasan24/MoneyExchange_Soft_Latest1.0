@@ -254,8 +254,8 @@
       <button class="btn btn-success" id="submitBtn">Save Money Receipt</button>
     </div>
 
-    <!-- Debug -->
-    <pre id="output"></pre>
+    <!-- Debug
+    <pre id="output"></pre> -->
   </div>
 
   <!-- ✅ JS -->
@@ -324,7 +324,7 @@
         items: items
       };
 
-      document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+      // document.getElementById('output').textContent = JSON.stringify(data, null, 2);
 
       //saving to the database
             try {
