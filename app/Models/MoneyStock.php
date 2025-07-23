@@ -10,4 +10,7 @@ class MoneyStock extends Model
 
     public $timestamps = false; // Disable timestamps
 
+    public function currency(){
+        return $this->belongsTo(Currency::class);
+    }
 }

@@ -444,7 +444,7 @@
 
             if (res.ok) {
                 alert("Purchase saved successfully!");
-                window.location.href = "index.php";
+                window.location.assign("{{ route('purchases.index') }}");
             } else {
                 alert("Failed to save purchase.");
             }

@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\MoneyStockController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('pages.Home.dashboard');
 });
 
+Route::get('stock_balance', [MoneyStockController::class,'stock_balance'])->name('stock_balance');
 Route::resource('currencies', App\Http\Controllers\CurrencyController::class);
 Route::resource('transactions', App\Http\Controllers\TransactionController::class);
 Route::resource('payments', App\Http\Controllers\PaymentController::class);

@@ -9,17 +9,37 @@ use App\Models\Purchase;
 
 
 class MoneyStockController extends Controller
+
 {
+    //stock balance
+    public function stock_balance()
+    {
+        // Get all MoneyStock records with their related currency
+        $stocks = MoneyStock::with('currency')->get();
+
+        // Group by currency_id and sum qty
+        $groupedStocks = $stocks->groupBy('currency_id')->map(function ($group) {
+            return [
+                'currency_id' => $group->first()->currency_id,
+                'currency_name' => optional($group->first()->currency)->currency_name, // safe access
+                'qty' => $group->sum('qty'),
+            ];
+        });
+
+        return view('pages.money_stocks.balance', ['groupedStocks' => $groupedStocks]);
+    }
+
+
     public function index()
     {
-        $money_stocks = MoneyStock::orderBy('id','DESC')->paginate(10);
+        $money_stocks = MoneyStock::orderBy('id', 'DESC')->paginate(10);
         return view('pages.money_stocks.index', compact('money_stocks'));
     }
 
     public function create()
     {
-        $currencies = \App\Models\Currency::all();
-        $purchases = \App\Models\Purchase::all();
+        $currencies = Currency::all();
+        $purchases = Purchase::all();
 
         return view('pages.money_stocks.create', [
             'mode' => 'create',
@@ -47,8 +67,8 @@ class MoneyStockController extends Controller
 
     public function edit(MoneyStock $moneyStock)
     {
-        $currencies = \App\Models\Currency::all();
-        $purchases = \App\Models\Purchase::all();
+        $currencies = Currency::all();
+        $purchases = Purchase::all();
 
         return view('pages.money_stocks.edit', [
             'mode' => 'edit',
