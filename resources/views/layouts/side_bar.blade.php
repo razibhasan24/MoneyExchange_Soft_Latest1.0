@@ -49,6 +49,10 @@
                           <a href="{{url('/money_stocks')}}">
                             Manage Money Stock</a>
                       </li>
+                      <li>
+                          <a href="{{url('/stock_balance')}}">
+                            Balance Money Stock</a>
+                      </li>
                   </ul>
               </li>
               <li>

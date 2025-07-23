@@ -149,16 +149,16 @@
         background-color: #ffffff;
         color: black;
         padding: 20px;
-        margin-top: 40px;
+        margin-top: 15px;
         text-align: space end;
     }
 
     .company-section {
         background-color: #ffffff;
         border-radius: 6px;
-        box-shadow: 0 0 10px #292626;
+        /* box-shadow: 0 0 10px #292626; */
         padding: 20px;
-        margin-bottom: 30px;
+        margin-bottom: 20px;
 
     }
 
@@ -189,7 +189,7 @@
 <!-- ========== Header ========== -->
 <!-- ========== Header with Logo ========== -->
 <header class="header_all">
-    <div class="container d-flex align-items-center justify-content-between flex-wrap">
+    <div class="container d-flex align-items-center justify-content-between">
         <!-- Logo -->
         <div class="imageaa">
             <img src="{{ asset('assets/img/logos/mex_logo.png') }}" alt="logo">
@@ -197,8 +197,9 @@
         </div>
 
         <!-- Company Info -->
-        <div class="text-end ">
-            <h1>Global Money Exchange</h1>
+        <div class="text-end m-title ">
+            <!-- <h1>Global Money Exchange</h1> -->
+            <h1>Global Money Exchange</h2>
             <p><strong>Address:</strong> 123 Business Street, Dhaka, Bangladesh</p>
             <p><strong>Email:</strong> support@fastsend.com</p>
             <p><strong>Phone:</strong> +880 1234-567890</p>
@@ -214,7 +215,7 @@
 
 
 <!-- Side-by-side Companies -->
-<div class="row g-2">
+<div class="row g-2 mt-4">
     <!-- Company A -->
     <div class="col-md-6">
         <div class="company-section h-80">
@@ -434,7 +435,7 @@
         };
         console.log(data);
         try {
-            const res = await fetch('http://127.0.0.1:8000/api/purchases', {
+            const res = await fetch('http://razib.intelsofts.com/projects/laravel/mex/public/api/purchases', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
