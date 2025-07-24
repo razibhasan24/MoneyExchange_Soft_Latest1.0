@@ -6,8 +6,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class PurchaseDetail extends Model
 {
-    protected $fillable = ['purchase_id', 'currency_id', 'qty', 'rate', 'vat'];
+    protected $table = 'purchase_details';
 
-    public $timestamps = false; // Disable timestamps
+    protected $fillable = [
+        'purchase_id',
+        'currency_id',
+        'qty',
+        'rate',
+        'vat'
+    ];
 
+    public function purchase()
+    {
+        return $this->belongsTo(Purchase::class, 'purchase_id');
+    }
+
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class);
+    }
 }

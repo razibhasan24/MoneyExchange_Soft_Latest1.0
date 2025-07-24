@@ -44,10 +44,18 @@ class PurchaseController extends Controller
         return redirect()->route('purchases.index')->with('success', 'Successfully created!');
     }
 
+    // public function show(Purchase $purchase )
+    // {
+    //     $statuses=Status:: all();
+    //     return view('pages.purchases.view', compact('purchase','statuses'));
+
+    // }
     public function show(Purchase $purchase)
-    {
-        return view('pages.purchases.view', compact('purchase'));
-    }
+{
+    $purchase->load(['agent', 'status', 'details.currency']); // Ensure nested relations are eager loaded
+    return view('pages.purchases.view', compact('purchase'));
+}
+
 
     public function edit(Purchase $purchase)
     {

@@ -252,7 +252,7 @@
         };
 
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/invoice', {
+            const response = await fetch('http://razib.intelsofts.com/projects/laravel/mex/public/api/invoice', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

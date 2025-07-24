@@ -22,7 +22,7 @@
                     <div class="col-md-5">
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                 <span class="input-group-text px-2 py-2 bg-info d-flex justify-content-center text-white" style="padding-bottom: 0.9rem!important;">
+                                <span class="input-group-text px-2 py-2 bg-info d-flex justify-content-center text-white" style="padding-bottom: 0.9rem!important;">
                                     <i class="fa fa-search"></i>
                                 </span>
                             </div>
@@ -61,19 +61,35 @@
         <!-- Table -->
         <div class="table-responsive rounded-3">
             <table class="table table-hover">
-                <thead class="table-primary"><tr><th>Id</th><th>Currency code</th><th>Currency name</th><th>Symbol</th><th>Image</th><th>Actions</th></tr></thead>
+                <thead class="table-primary">
+                    <tr>
+                        <th>Id</th>
+                        <th>Currency code</th>
+                        <th>Currency name</th>
+                        <th>Symbol</th>
+                        <th>Photo</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
                 <tbody>
-                @foreach ($currencies as $item)
-                    <tr><td>{{ $item->id }}</td><td>{{ $item->currency_code }}</td><td>{{ $item->currency_name }}</td><td>{{ $item->symbol }}</td><td>@if($item->image)<img src="{{ asset('storage/' . $item->image) }}" width="50">@endif</td><td style="min-width:220px">
-    <a href="{{ route('currencies.show', $item->id) }}" class="btn btn-sm btn-info">View</a>
-    <a href="{{ route('currencies.edit', $item->id) }}" class="btn btn-sm btn-warning">Edit</a>
-    <form action="{{ route('currencies.destroy', $item->id) }}" method="POST" style="display:inline;">
-        @csrf
-        @method('DELETE')
-        <button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
-    </form>
-</td></tr>
-                @endforeach
+                    @foreach ($currencies as $item)
+                    <tr>
+                        <td>{{ $item->id }}</td>
+                        <td>{{ $item->currency_code }}</td>
+                        <td>{{ $item->currency_name }}</td>
+                        <td>{{ $item->symbol }}</td>
+                        <td>@if($item->photo)<img src="{{ asset('storage/' . $item->photo) }}" width="50">@endif</td>
+                        <td style="min-width:220px">
+                            <a href="{{ route('currencies.show', $item->id) }}" class="btn btn-sm btn-info">View</a>
+                            <a href="{{ route('currencies.edit', $item->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                            <form action="{{ route('currencies.destroy', $item->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

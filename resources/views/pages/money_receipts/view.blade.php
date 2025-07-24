@@ -1,131 +1,129 @@
 @extends('layouts.master')
-@section('page-title', 'MoneyReceipt Details')
+
+@section('page-title', 'View Money Receipt')
+
 @section('pages')
-    <div class="page-inner">
-        <!-- Page Header -->
-        <div class="card bg-info mb-3 p-4">
-            <div class="row">
-                <div class="col-12 d-flex justify-content-between align-items-center">
-                    <h3 class="card-title text-white d-flex align-items-center m-0">
-                         MoneyReceipt Details
-                    </h3>
-                    <div>
-                        <a href="{{ route('money_receipts.index') }}" class="btn btn-light btn-sm" title="Back">
-                            <i class="fa fa-arrow-left mr-1"></i> Back
-                        </a>
-                        <a href="{{ route('money_receipts.edit', $moneyReceipt->id) }}" class="btn btn-warning btn-sm" title="Edit">
-                            <i class="fa fa-edit mr-1"></i> Edit
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="card">
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-hover table-striped">
-                        <tbody>
-                                            <tr>
-                    <th>Id</th>
-                    <td>{{ $moneyReceipt->id ?? 'N/A' }}</td>
-                </tr>                <tr>
-                    <th>Receipt number</th>
-                    <td>{{ $moneyReceipt->receipt_number ?? 'N/A' }}</td>
-                </tr>                <tr>
-                    <th>Transaction id</th>
-                    <td>{{ $moneyReceipt->transaction->name ?? $moneyReceipt->transaction_id }}</td>
-                </tr>                <tr>
-                    <th>Customer id</th>
-                    <td>{{ $moneyReceipt->customer->name ?? $moneyReceipt->customer_id }}</td>
-                </tr>                <tr>
-                    <th>Agent id</th>
-                    <td>{{ $moneyReceipt->agent->name ?? $moneyReceipt->agent_id }}</td>
-                </tr>                <tr>
-                    <th>Total amount</th>
-                    <td>{{ $moneyReceipt->total_amount ?? 'N/A' }}</td>
-                </tr>                <tr>
-                    <th>Payment method</th>
-                    <td>{{ $moneyReceipt->payment_method ?? 'N/A' }}</td>
-                </tr>                <tr>
-                    <th>Status</th>
-                    <td>{{ $moneyReceipt->status ?? 'N/A' }}</td>
-                </tr>                <tr>
-                    <th>Issued by</th>
-                    <td>{{ $moneyReceipt->issued_by ?? 'N/A' }}</td>
-                </tr>                <tr>
-                    <th>Issued date</th>
-                    <td>{{ $moneyReceipt->issued_date ?? 'N/A' }}</td>
-                </tr>                <tr>
-                    <th>Notes</th>
-                    <td>{{ $moneyReceipt->notes ?? 'N/A' }}</td>
-                </tr>                <tr>
-                    <th>Created at</th>
-                    <td>{{ $moneyReceipt->created_at ?? 'N/A' }}</td>
-                </tr>                <tr>
-                    <th>Updated at</th>
-                    <td>{{ $moneyReceipt->updated_at ?? 'N/A' }}</td>
-                </tr>                <tr>
-                    <th>Created At</th>
-
-                    <td>{{ $moneyReceipt->created_at->format('M d, Y h:i A') }}</td>
-                </tr>                <tr>
-                    <th>Updated At</th>
-
-                    <td>{{ $moneyReceipt->updated_at->format('M d, Y h:i A') }}</td>
-                </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="mt-4 d-flex justify-content-between">
-                    <form action="{{ route('money_receipts.destroy', $moneyReceipt->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this?')">
-                            <i class="fas fa-trash mr-1"></i> Delete
-                        </button>
-                    </form>
-
-                    @if(isset($moneyReceipt->status))
-                        <span class="badge
-                            @if($moneyReceipt->status == 'active') bg-success @endif
-                            @if($moneyReceipt->status == 'inactive') bg-danger @endif
-                            @if($moneyReceipt->status == 'pending') bg-warning @endif">
-                            {{ ucfirst($moneyReceipt->status) }}
-                        </span>
-                    @endif
-                </div>
-            </div>
-        </div>
-    </div>
-@endsection
-
-@push('styles')
 <style>
-    .table th {
-        width: 30%;
-        background-color: #f8f9fa;
+    @media print {
+        .no-print {
+            display: none !important;
+        }
     }
-    .img-thumbnail {
-        max-height: 200px;
-        object-fit: contain;
-        background-color: #f8f9fa;
-        border: 1px solid #dee2e6;
+
+    .receipt-container {
+        max-width: 70vw;
+        margin: 30px auto;
+        background: #fff;
+        padding: 30px;
+        box-shadow: 0 0 5px #ccc;
+        font-family: Arial, sans-serif;
     }
-    .badge {
-        font-size: 0.85rem;
-        padding: 0.5rem 0.75rem;
+
+    .main-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
     }
-    .bg-success {
-        background-color: #28a745 !important;
+
+    .main-header img {
+        max-height: 100px;
     }
-    .bg-danger {
-        background-color: #dc3545 !important;
+
+    h2 {
+        color: #003366;
+        text-align: center;
+        margin-bottom: 30px;
     }
-    .bg-warning {
-        background-color: #ffc107 !important;
-        color: #212529;
+
+    .info-section {
+        margin-bottom: 20px;
+    }
+
+    .info-section label {
+        font-weight: bold;
+        display: inline-block;
+        min-width: 150px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 25px;
+    }
+
+    th, td {
+        border: 1px solid #003366;
+        padding: 10px;
+        text-align: center;
+    }
+
+    th {
+        background-color: #003366;
+        color: #fff;
     }
 </style>
-@endpush
+
+<div class="receipt-container" id="receipt-content">
+    <!-- Header -->
+    <div class="main-header">
+        <div>
+            <img src="{{ asset('assets/img/logos/money-exchange-logo.png') }}" alt="Logo">
+        </div>
+        <div style="text-align:right;">
+            <p><strong>Money Exchange Company Ltd.</strong></p>
+            <p>123 Exchange Road, Dhaka</p>
+            <p>info@moneyexchange.com</p>
+        </div>
+    </div>
+
+    <!-- Title -->
+    <h2>Money Receipt</h2>
+
+    <!-- Info Section -->
+    <div class="info-section">
+        <p><label>Receipt No:</label> {{ $receipt->receipt_number }}</p>
+        <p><label>Transaction ID:</label> {{ $receipt->transaction->status ?? 'N/A' }}</p>
+        <p><label>Customer:</label> {{ $receipt->customer->name ?? 'N/A' }}</p>
+        <p><label>Agent:</label> {{ $receipt->agent->name ?? 'N/A' }}</p>
+        <p><label>Total Amount:</label> {{ number_format($receipt->total_amount, 2) }}</p>
+        <p><label>Payment Method:</label> {{ $receipt->paymentMethod->payment_method ?? 'N/A' }}</p>
+        <p><label>Status:</label> {{ $receipt->status->name ?? 'N/A' }}</p>
+        <p><label>Issued By:</label> {{ $receipt->issued_by }}</p>
+        <p><label>Issued Date:</label> {{ \Carbon\Carbon::parse($receipt->issued_date)->format('d M Y') }}</p>
+        <p><label>Notes:</label> {{ $receipt->notes ?? '-' }}</p>
+    </div>
+
+    <!-- Detail Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>Currency Code</th>
+                <th>Amount</th>
+                <th>Exchange Rate</th>
+                <th>Equivalent Amount</th>
+                <th>Fee</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($receipt->details as $detail)
+                <tr>
+                    <td>{{ $detail->currency->currency_code ?? '-' }}</td>
+                    <td>{{ number_format($detail->amount, 2) }}</td>
+                    <td>{{ number_format($detail->exchange_rate, 2) }}</td>
+                    <td>{{ number_format($detail->equivalent_amount, 2) }}</td>
+                    <td>{{ number_format($detail->fee, 2) }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+
+<!-- ✅ Print & PDF Buttons -->
+<div class="no-print" style="text-align: center; margin-top: 30px;">
+    <button onclick="window.print()" class="btn btn-primary">🖨️ Print</button>
+    <a href="{{ route('receipts.download.pdf', $receipt->id) }}" class="btn btn-danger">⬇️ Download PDF</a>
+</div>
+
+@endsection

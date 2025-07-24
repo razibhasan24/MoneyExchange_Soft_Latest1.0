@@ -16,10 +16,10 @@
     <input type="text" name="symbol" value="{{ old('symbol', $currency->symbol ?? '') }}" class="form-control">
 </div>
 <div class="mb-2">
-    <label>Image</label>
-    @if(isset($currency->image) && $currency->image)
-        <br><img src="{{ asset('storage/' . $currency->image) }}" width="100">
+    <label>Photo</label>
+    @if(isset($currency->photo) && $currency->photo)
+        <br><img src="{{ asset('storage/' . $currency->photo) }}" width="100">
     @endif
-    <input type="file" name="image" class="form-control">
+    <input type="file" name="photo" class="form-control">
 </div>
 <button class="btn btn-info">{{ $mode === 'edit' ? 'Update' : 'Create' }}</button>

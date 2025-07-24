@@ -328,7 +328,7 @@
 
       //saving to the database
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/money_receipts', {
+                const response = await fetch('http://razib.intelsofts.com/projects/laravel/mex/public/api/money_receipts', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

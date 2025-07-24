@@ -39,12 +39,12 @@
                     <th>Symbol</th>
                     <td>{{ $currency->symbol ?? 'N/A' }}</td>
                 </tr>                <tr>
-                    <th width="30%">Image</th>
+                    <th width="30%">Photo</th>
                     <td>
-                        @if($currency->image)
-                            <img src="{{ asset('storage/' . $currency->image) }}" class="img-thumbnail" width="150">
+                        @if($currency->photo)
+                            <img src="{{ asset('storage/' . $currency->photo) }}" class="img-thumbnail" width="150">
                         @else
-                            <span class="text-muted">No Image</span>
+                            <span class="text-muted">No Photo</span>
                         @endif
                     </td>
                 </tr>

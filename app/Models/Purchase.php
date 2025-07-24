@@ -6,8 +6,28 @@ use Illuminate\Database\Eloquent\Model;
 
 class Purchase extends Model
 {
-    protected $fillable = ['agent_id', 'status_id', 'purchase_date', 'remarks', 'purchase_total'];
+    protected $table = 'purchases';
 
-    public $timestamps = false; // Disable timestamps
+    protected $fillable = [
+        'agent_id',
+        'purchase_date',
+        'remarks',
+        'purchase_total',
+        'status_id'
+    ];
 
+    public function agent()
+    {
+        return $this->belongsTo(Agent::class);
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
+    }
+
+    public function details()
+    {
+        return $this->hasMany(PurchaseDetail::class, 'purchase_id');
+    }
 }

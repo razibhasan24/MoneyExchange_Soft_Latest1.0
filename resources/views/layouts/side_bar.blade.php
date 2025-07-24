@@ -114,7 +114,7 @@
                           <a href="{{url("/money_receipts")}}">Manage MR</a>
                       </li>
                       <li>
-                          <a href="/invoices/create">Create Invoice</a>
+                          <a href="{{url('/invoices/create')}}">Create Invoice</a>
                       </li>
                       <li>
                           <a href="{{ url('/invoices') }}">Manage Invoice</a>

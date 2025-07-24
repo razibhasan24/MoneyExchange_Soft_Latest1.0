@@ -28,3 +28,5 @@ Route::resource('money_stocks', App\Http\Controllers\MoneyStockController::class
 
 Route::resource('money_receipts', App\Http\Controllers\MoneyReceiptController::class);
 Route::resource('money_receipt_details', App\Http\Controllers\MoneyReceiptDetailController::class);
+Route::resource('currencies', App\Http\Controllers\CurrencyController::class);
+Route::resource('currencies', App\Http\Controllers\CurrencyController::class);
