@@ -4,11 +4,11 @@
 @endif
 
 <div class="mb-2">
-    <label>Purchase</label>
-    <select name="purchase_id" class="form-select">
-        <option value="">--- Select Purchase ---</option>
-        @foreach ($purchases as $option)
-            <option value="{{ $option->id }}" {{ old('purchase_id', $orderDetail->purchase_id ?? '') == $option->id ? 'selected' : '' }}>{{ $option->name ?? $option->id }}</option>
+    <label>Order</label>
+    <select name="order_id" class="form-select">
+        <option value="">--- Select Order ---</option>
+        @foreach ($orders as $option)
+            <option value="{{ $option->id }}" {{ old('order_id', $orderDetail->order_id ?? '') == $option->id ? 'selected' : '' }}>{{ $option->name ?? $option->id }}</option>
         @endforeach
     </select>
 </div>
@@ -26,11 +26,11 @@
     <input type="text" name="qty" value="{{ old('qty', $orderDetail->qty ?? '') }}" class="form-control">
 </div>
 <div class="mb-2">
-    <label>Vat</label>
-    <input type="text" name="vat" value="{{ old('vat', $orderDetail->vat ?? '') }}" class="form-control">
+    <label>Rate</label>
+    <input type="text" name="rate" value="{{ old('rate', $orderDetail->rate ?? '') }}" class="form-control">
 </div>
 <div class="mb-2">
-    <label>Discount</label>
-    <input type="text" name="discount" value="{{ old('discount', $orderDetail->discount ?? '') }}" class="form-control">
+    <label>Vat</label>
+    <input type="text" name="vat" value="{{ old('vat', $orderDetail->vat ?? '') }}" class="form-control">
 </div>
 <button class="btn btn-info">{{ $mode === 'edit' ? 'Update' : 'Create' }}</button>

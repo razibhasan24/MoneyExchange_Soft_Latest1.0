@@ -22,7 +22,7 @@
                     <div class="col-md-5">
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                 <span class="input-group-text px-2 py-2 bg-info d-flex justify-content-center text-white" style="padding-bottom: 0.9rem!important;">
+                                <span class="input-group-text px-2 py-2 bg-info d-flex justify-content-center text-white" style="padding-bottom: 0.9rem!important;">
                                     <i class="fa fa-search"></i>
                                 </span>
                             </div>
@@ -61,19 +61,41 @@
         <!-- Table -->
         <div class="table-responsive rounded-3">
             <table class="table table-hover">
-                <thead class="table-primary"><tr><th>Id</th><th>Receipt number</th><th>Transaction id</th><th>Customer id</th><th>Agent id</th><th>Total amount</th><th>Payment method</th><th>Status</th><th>Issued by</th><th>Issued date</th><th>Notes</th><th>Created at</th><th>Updated at</th><th>Actions</th></tr></thead>
+                <thead class="table-primary">
+                    <tr>
+                        <th>Id</th>
+                        <th>Receipt number</th>
+                        <th>Transaction id</th>
+                        <th>Customer id</th>
+                        <th>Agent id</th>
+                        <th>Total amount</th>
+                        <th>Payment method</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
                 <tbody>
-                @foreach ($money_receipts as $item)
-                    <tr><td>{{ $item->id }}</td><td>{{ $item->receipt_number }}</td><td>{{ optional($item->transaction)->name ?? $item->transaction_id }}</td><td>{{ optional($item->customer)->name ?? $item->customer_id }}</td><td>{{ optional($item->agent)->name ?? $item->agent_id }}</td><td>{{ $item->total_amount }}</td><td>{{ $item->payment_method }}</td><td>{{ $item->status }}</td><td>{{ $item->issued_by }}</td><td>{{ $item->issued_date }}</td><td>{{ $item->notes }}</td><td>{{ $item->created_at }}</td><td>{{ $item->updated_at }}</td><td style="min-width:220px">
-    <a href="{{ route('money_receipts.show', $item->id) }}" class="btn btn-sm btn-info">View</a>
-    <a href="{{ route('money_receipts.edit', $item->id) }}" class="btn btn-sm btn-warning">Edit</a>
-    <form action="{{ route('money_receipts.destroy', $item->id) }}" method="POST" style="display:inline;">
-        @csrf
-        @method('DELETE')
-        <button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
-    </form>
-</td></tr>
-                @endforeach
+                    @foreach ($money_receipts as $item)
+                    <tr>
+                        <td>{{ $item->id }}</td>
+                        <td>{{ $item->receipt_number }}</td>
+                        <td>{{ optional($item->transaction)->name ?? $item->transaction_id }}</td>
+                        <td>{{ optional($item->customer)->name ?? $item->customer_id }}</td>
+                        <td>{{ optional($item->agent)->name ?? $item->agent_id }}</td>
+                        <td>{{ $item->total_amount }}</td>
+                        <td>{{ $item->payment_method }}</td>
+                        <td>{{ $item->status }}</td>
+                        <td style="min-width:220px">
+                            <a href="{{ route('money_receipts.show', $item->id) }}" class="btn btn-sm btn-info">View</a>
+                            <a href="{{ route('money_receipts.edit', $item->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                            <form action="{{ route('money_receipts.destroy', $item->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

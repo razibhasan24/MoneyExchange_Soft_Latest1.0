@@ -30,3 +30,5 @@ Route::resource('money_receipts', App\Http\Controllers\MoneyReceiptController::c
 Route::resource('money_receipt_details', App\Http\Controllers\MoneyReceiptDetailController::class);
 Route::resource('currencies', App\Http\Controllers\CurrencyController::class);
 Route::resource('currencies', App\Http\Controllers\CurrencyController::class);
+Route::resource('orders', App\Http\Controllers\OrderController::class);
+Route::resource('order_details', App\Http\Controllers\OrderDetailController::class);

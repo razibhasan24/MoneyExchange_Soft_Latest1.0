@@ -274,7 +274,7 @@
             </div>
             <div class="col-md-3">
                 <label class="form-label">Purchase Total</label>
-                <input type="number" id="purchase_total" class="form-control" step="0.01" required>
+                <input type="number" disabled id="purchase_total" class="form-control" step="0.01" required>
             </div>
         </div>
         <div class="mb-3">
@@ -399,9 +399,12 @@
 
     function renderItems() {
         const tbody = document.getElementById('itemsTableBody');
+        const totalInput=document.getElementById('purchase_total');
+        let totalAmount=0;
         tbody.innerHTML = '';
-
         items.forEach((item, index) => {
+            totalAmount +=item.total;
+            
             const row = `
         <tr>
           <td>${item.currency_name}</td>
@@ -414,6 +417,7 @@
       `;
             tbody.innerHTML += row;
         });
+        totalInput.value=totalAmount;
     }
 
     function deleteItem(index) {

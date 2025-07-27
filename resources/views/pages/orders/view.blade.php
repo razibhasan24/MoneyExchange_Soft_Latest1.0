@@ -42,8 +42,25 @@
                     <th>Status id</th>
                     <td>{{ $order->status->name ?? $order->status_id }}</td>
                 </tr>                <tr>
+                    <th>Paid amount</th>
+                    <td>{{ $order->paid_amount ?? 'N/A' }}</td>
+                </tr>                <tr>
                     <th>Remarks</th>
                     <td>{{ $order->remarks ?? 'N/A' }}</td>
+                </tr>                <tr>
+                    <th>Created at</th>
+                    <td>{{ $order->created_at ?? 'N/A' }}</td>
+                </tr>                <tr>
+                    <th>Updated at</th>
+                    <td>{{ $order->updated_at ?? 'N/A' }}</td>
+                </tr>                <tr>
+                    <th>Created At</th>
+
+                    <td>{{ $modelVar->created_at->format('M d, Y h:i A') }}</td>
+                </tr>                <tr>
+                    <th>Updated At</th>
+
+                    <td>{{ $modelVar->updated_at->format('M d, Y h:i A') }}</td>
                 </tr>
                         </tbody>
                     </table>

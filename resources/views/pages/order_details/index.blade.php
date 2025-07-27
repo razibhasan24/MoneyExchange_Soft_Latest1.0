@@ -61,10 +61,10 @@
         <!-- Table -->
         <div class="table-responsive rounded-3">
             <table class="table table-hover">
-                <thead class="table-primary"><tr><th>Id</th><th>Purchase id</th><th>Currency id</th><th>Qty</th><th>Vat</th><th>Discount</th><th>Actions</th></tr></thead>
+                <thead class="table-primary"><tr><th>Id</th><th>Order id</th><th>Currency id</th><th>Qty</th><th>Rate</th><th>Vat</th><th>Actions</th></tr></thead>
                 <tbody>
                 @foreach ($order_details as $item)
-                    <tr><td>{{ $item->id }}</td><td>{{ optional($item->purchase)->name ?? $item->purchase_id }}</td><td>{{ optional($item->currency)->name ?? $item->currency_id }}</td><td>{{ $item->qty }}</td><td>{{ $item->vat }}</td><td>{{ $item->discount }}</td><td style="min-width:220px">
+                    <tr><td>{{ $item->id }}</td><td>{{ optional($item->order)->name ?? $item->order_id }}</td><td>{{ optional($item->currency)->name ?? $item->currency_id }}</td><td>{{ $item->qty }}</td><td>{{ $item->rate }}</td><td>{{ $item->vat }}</td><td style="min-width:220px">
     <a href="{{ route('order_details.show', $item->id) }}" class="btn btn-sm btn-info">View</a>
     <a href="{{ route('order_details.edit', $item->id) }}" class="btn btn-sm btn-warning">Edit</a>
     <form action="{{ route('order_details.destroy', $item->id) }}" method="POST" style="display:inline;">

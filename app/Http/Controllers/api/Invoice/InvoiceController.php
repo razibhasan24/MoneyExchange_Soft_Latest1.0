@@ -15,7 +15,8 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        //
+        $invoices = Invoice::with('details')->orderBy('id', 'desc')->get();
+        return response()->json($invoices);
     }
 
     /**
@@ -30,9 +31,7 @@ class InvoiceController extends Controller
         $invoice->status = $request->status;
         $invoice->save();
 
-
-        $items = $request->items;
-        foreach ($items as $item) {
+        foreach ($request->items as $item) {
             $details = new InvoiceDetail();
             $details->invoice_id = $invoice->id;
             $details->description = $item['description'];
@@ -41,23 +40,16 @@ class InvoiceController extends Controller
             $details->vat = $item['vat'];
             $details->save();
 
-            // $stocks=new MoneyStock();
-            //     $stocks->purchase_id=$invoice->id;
-            //     $stocks->currency_id=$item['currency_id'];
-            //     $stocks->qty=-$item['total_amount'];
-            //     $stocks->transaction_type="out";
-            //     $stocks->remarks="Seals";
-            //     $stocks->save();
             $stocks = new MoneyStock();
-            $stocks->purchase_id = $invoice->id;
-            $stocks->currency_id = $item['currency_id'] ?? 1; 
-            $stocks->qty = - ($item['total_amount'] ?? 0);
-            $stocks->transaction_type = "out";
-            $stocks->remarks = "Seals";
+            $stocks->invoice_id = $invoice->id;
+            $stocks->currency_id = $item['currency_id'] ?? 1;
+            $stocks->qty = -($item['total_amount'] ?? 0);
+            $stocks->transaction_type = "OUT";
+            $stocks->remarks = "Sales";
             $stocks->save();
         }
 
-        return response()->json($invoice);
+        return response()->json($invoice, 201);
     }
 
     /**
@@ -65,7 +57,13 @@ class InvoiceController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $invoice = Invoice::with('details')->find($id);
+
+        if (!$invoice) {
+            return response()->json(['message' => 'Invoice not found'], 404);
+        }
+
+        return response()->json($invoice);
     }
 
     /**
@@ -73,7 +71,37 @@ class InvoiceController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $invoice = Invoice::find($id);
+
+        if (!$invoice) {
+            return response()->json(['message' => 'Invoice not found'], 404);
+        }
+
+        $invoice->update($request->only(['customer_id', 'invoice_date', 'total_amount', 'status']));
+
+        // Delete old details and stock
+        InvoiceDetail::where('invoice_id', $invoice->id)->delete();
+        MoneyStock::where('invoice_id', $invoice->id)->delete();
+
+        foreach ($request->items as $item) {
+            $details = new InvoiceDetail();
+            $details->invoice_id = $invoice->id;
+            $details->description = $item['description'];
+            $details->qty = $item['qty'];
+            $details->rate = $item['rate'];
+            $details->vat = $item['vat'];
+            $details->save();
+
+            $stocks = new MoneyStock();
+            $stocks->invoice_id = $invoice->id;
+            $stocks->currency_id = $item['currency_id'] ?? 1;
+            $stocks->qty = -($item['total_amount'] ?? 0);
+            $stocks->transaction_type = "OUT";
+            $stocks->remarks = "Sales Updated";
+            $stocks->save();
+        }
+
+        return response()->json($invoice);
     }
 
     /**
@@ -81,6 +109,16 @@ class InvoiceController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $invoice = Invoice::find($id);
+
+        if (!$invoice) {
+            return response()->json(['message' => 'Invoice not found'], 404);
+        }
+
+        InvoiceDetail::where('invoice_id', $id)->delete();
+        MoneyStock::where('invoice_id', $id)->delete();
+        $invoice->delete();
+
+        return response()->json(['message' => 'Invoice deleted successfully']);
     }
 }

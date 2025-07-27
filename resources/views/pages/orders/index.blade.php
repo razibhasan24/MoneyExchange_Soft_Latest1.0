@@ -61,10 +61,10 @@
         <!-- Table -->
         <div class="table-responsive rounded-3">
             <table class="table table-hover">
-                <thead class="table-primary"><tr><th>Id</th><th>Customer id</th><th>Order date</th><th>Order total</th><th>Status id</th><th>Remarks</th><th>Actions</th></tr></thead>
+                <thead class="table-primary"><tr><th>Id</th><th>Customer id</th><th>Order date</th><th>Order total</th><th>Status id</th><th>Paid amount</th><th>Remarks</th><th>Created at</th><th>Updated at</th><th>Actions</th></tr></thead>
                 <tbody>
                 @foreach ($orders as $item)
-                    <tr><td>{{ $item->id }}</td><td>{{ optional($item->customer)->name ?? $item->customer_id }}</td><td>{{ $item->order_date }}</td><td>{{ $item->order_total }}</td><td>{{ optional($item->status)->name ?? $item->status_id }}</td><td>{{ $item->remarks }}</td><td style="min-width:220px">
+                    <tr><td>{{ $item->id }}</td><td>{{ optional($item->customer)->name ?? $item->customer_id }}</td><td>{{ $item->order_date }}</td><td>{{ $item->order_total }}</td><td>{{ optional($item->status)->name ?? $item->status_id }}</td><td>{{ $item->paid_amount }}</td><td>{{ $item->remarks }}</td><td>{{ $item->created_at }}</td><td>{{ $item->updated_at }}</td><td style="min-width:220px">
     <a href="{{ route('orders.show', $item->id) }}" class="btn btn-sm btn-info">View</a>
     <a href="{{ route('orders.edit', $item->id) }}" class="btn btn-sm btn-warning">Edit</a>
     <form action="{{ route('orders.destroy', $item->id) }}" method="POST" style="display:inline;">

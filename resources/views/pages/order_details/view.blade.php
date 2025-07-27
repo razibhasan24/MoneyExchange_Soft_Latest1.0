@@ -30,8 +30,8 @@
                     <th>Id</th>
                     <td>{{ $orderDetail->id ?? 'N/A' }}</td>
                 </tr>                <tr>
-                    <th>Purchase id</th>
-                    <td>{{ $orderDetail->purchase->name ?? $orderDetail->purchase_id }}</td>
+                    <th>Order id</th>
+                    <td>{{ $orderDetail->order->name ?? $orderDetail->order_id }}</td>
                 </tr>                <tr>
                     <th>Currency id</th>
                     <td>{{ $orderDetail->currency->name ?? $orderDetail->currency_id }}</td>
@@ -39,11 +39,11 @@
                     <th>Qty</th>
                     <td>{{ $orderDetail->qty ?? 'N/A' }}</td>
                 </tr>                <tr>
+                    <th>Rate</th>
+                    <td>{{ $orderDetail->rate ?? 'N/A' }}</td>
+                </tr>                <tr>
                     <th>Vat</th>
                     <td>{{ $orderDetail->vat ?? 'N/A' }}</td>
-                </tr>                <tr>
-                    <th>Discount</th>
-                    <td>{{ $orderDetail->discount ?? 'N/A' }}</td>
                 </tr>
                         </tbody>
                     </table>

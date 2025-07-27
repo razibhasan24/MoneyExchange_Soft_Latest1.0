@@ -4,126 +4,53 @@
 
 @section('pages')
 
-<style>
-    @media print {
-        .no-print {
-            display: none !important;
-        }
-    }
-
-    .receipt-container {
-        max-width: 70vw;
-        margin: 30px auto;
-        background: #fff;
-        padding: 30px;
-        box-shadow: 0 0 5px #ccc;
-        font-family: Arial, sans-serif;
-    }
-
-    .main-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 30px;
-    }
-
-    .main-header img {
-        max-height: 100px;
-    }
-
-    h2 {
-        color: #003366;
-        text-align: center;
-        margin-bottom: 30px;
-    }
-
-    .info-section {
-        margin-bottom: 20px;
-    }
-
-    .info-section label {
-        font-weight: bold;
-        display: inline-block;
-        min-width: 150px;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 25px;
-    }
-
-    th, td {
-        border: 1px solid #003366;
-        padding: 10px;
-        text-align: center;
-    }
-
-    th {
-        background-color: #003366;
-        color: #fff;
-    }
-</style>
-
-<div class="receipt-container" id="receipt-content">
-    <!-- Header -->
-    <div class="main-header">
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3>Money Receipt #{{ $receipt->id }}</h3>
         <div>
-            <img src="{{ asset('assets/img/logos/money-exchange-logo.png') }}" alt="Logo">
-        </div>
-        <div style="text-align:right;">
-            <p><strong>Money Exchange Company Ltd.</strong></p>
-            <p>123 Exchange Road, Dhaka</p>
-            <p>info@moneyexchange.com</p>
+            <button onclick="window.print()" class="btn btn-secondary">🖨️ Print</button>
         </div>
     </div>
 
-    <!-- Title -->
-    <h2>Money Receipt</h2>
-
-    <!-- Info Section -->
-    <div class="info-section">
-        <p><label>Receipt No:</label> {{ $receipt->receipt_number }}</p>
-        <p><label>Transaction ID:</label> {{ $receipt->transaction->status ?? 'N/A' }}</p>
-        <p><label>Customer:</label> {{ $receipt->customer->name ?? 'N/A' }}</p>
-        <p><label>Agent:</label> {{ $receipt->agent->name ?? 'N/A' }}</p>
-        <p><label>Total Amount:</label> {{ number_format($receipt->total_amount, 2) }}</p>
-        <p><label>Payment Method:</label> {{ $receipt->paymentMethod->payment_method ?? 'N/A' }}</p>
-        <p><label>Status:</label> {{ $receipt->status->name ?? 'N/A' }}</p>
-        <p><label>Issued By:</label> {{ $receipt->issued_by }}</p>
-        <p><label>Issued Date:</label> {{ \Carbon\Carbon::parse($receipt->issued_date)->format('d M Y') }}</p>
-        <p><label>Notes:</label> {{ $receipt->notes ?? '-' }}</p>
+    <!-- Master Info -->
+    <div class="card mb-4">
+        <div class="card-header bg-dark text-white">Receipt Summary</div>
+        <div class="card-body">
+            <p><strong>ID:</strong> {{ $receipt->id }}</p>
+            <p><strong>Customer ID:</strong> {{ $receipt->customer_id }}</p>
+            <p><strong>Remark:</strong> {{ $receipt->remark }}</p>
+            <p><strong>Total:</strong> ${{ number_format($receipt->receipt_total, 2) }}</p>
+            <p><strong>Discount:</strong> ${{ number_format($receipt->discount, 2) }}</p>
+            <p><strong>VAT:</strong> ${{ number_format($receipt->vat, 2) }}</p>
+            <p><strong>Created At:</strong> {{ $receipt->created_at->format('Y-m-d H:i') }}</p>
+            <p><strong>Updated At:</strong> {{ $receipt->updated_at->format('Y-m-d H:i') }}</p>
+        </div>
     </div>
 
-    <!-- Detail Table -->
-    <table>
-        <thead>
-            <tr>
-                <th>Currency Code</th>
-                <th>Amount</th>
-                <th>Exchange Rate</th>
-                <th>Equivalent Amount</th>
-                <th>Fee</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($receipt->details as $detail)
-                <tr>
-                    <td>{{ $detail->currency->currency_code ?? '-' }}</td>
-                    <td>{{ number_format($detail->amount, 2) }}</td>
-                    <td>{{ number_format($detail->exchange_rate, 2) }}</td>
-                    <td>{{ number_format($detail->equivalent_amount, 2) }}</td>
-                    <td>{{ number_format($detail->fee, 2) }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
-
-<!-- ✅ Print & PDF Buttons -->
-<div class="no-print" style="text-align: center; margin-top: 30px;">
-    <button onclick="window.print()" class="btn btn-primary">🖨️ Print</button>
-    <a href="{{ route('receipts.download.pdf', $receipt->id) }}" class="btn btn-danger">⬇️ Download PDF</a>
+    <!-- Receipt Details -->
+    <div class="card">
+        <div class="card-header bg-secondary text-white">Receipt Details</div>
+        <div class="card-body p-0">
+            <table class="table table-bordered mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Description</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($receipt->details as $index => $detail)
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $detail->description }}</td>
+                            <td>${{ number_format($detail->amount, 2) }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 @endsection

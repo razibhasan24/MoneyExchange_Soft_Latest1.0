@@ -30,6 +30,10 @@
     </select>
 </div>
 <div class="mb-2">
+    <label>Paid_amount</label>
+    <input type="text" name="paid_amount" value="{{ old('paid_amount', $order->paid_amount ?? '') }}" class="form-control">
+</div>
+<div class="mb-2">
     <label>Remarks</label>
     <input type="text" name="remarks" value="{{ old('remarks', $order->remarks ?? '') }}" class="form-control">
 </div>

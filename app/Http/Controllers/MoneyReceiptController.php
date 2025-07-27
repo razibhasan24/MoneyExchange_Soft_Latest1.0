@@ -60,16 +60,19 @@ class MoneyReceiptController extends Controller
         return redirect()->route('money_receipts.index')->with('success', 'Successfully created!');
     }
 
-    public function show(MoneyReceipt $moneyReceipt)
-    {
-        return view('pages.money_receipts.view', compact('moneyReceipt'));
-    }
+public function show(MoneyReceipt $moneyReceipt)
+{
+    $moneyReceipt->load('details');
+
+    return view('pages.money_receipts.view', ['receipt' => $moneyReceipt]);
+}
+
 
     public function edit(MoneyReceipt $moneyReceipt)
     {
-        $transactions = \App\Models\Transaction::all();
-        $customers = \App\Models\Customer::all();
-        $agents = \App\Models\Agent::all();
+        $transactions = Transaction::all();
+        $customers = Customer::all();
+        $agents = Agent::all();
 
         return view('pages.money_receipts.edit', [
             'mode' => 'edit',

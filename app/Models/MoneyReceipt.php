@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class MoneyReceipt extends Model
 {
-    protected $fillable = ['receipt_number', 'transaction_id', 'customer_id', 'agent_id', 'total_amount', 'payment_method', 'status', 'issued_by', 'issued_date', 'notes', 'created_at', 'updated_at'];
-
+    public function details()
+    {
+        return $this->hasMany(MoneyReceiptDetail::class, 'receipt_id', 'id');
+    }
+    protected $table = 'money_receipts';
 
 }

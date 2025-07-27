@@ -6,8 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class MoneyReceiptDetail extends Model
 {
-    protected $fillable = ['receipt_id', 'currency_code', 'amount', 'exchange_rate', 'equivalent_amount', 'fee', 'created_at'];
+    public function receipt()
+    {
 
-    public $timestamps = false; // Disable timestamps
-
+        return $this->belongsTo(MoneyReceipt::class, 'receipt_id', 'id');
+    }
+     protected $table = 'money_receipt_details';
 }
+
