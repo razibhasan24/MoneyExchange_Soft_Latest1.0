@@ -10,7 +10,7 @@
           </div>
           <ul class="side-menu metismenu">
               <li>
-                  <a class="active" href="index.html"><i class="sidebar-item-icon fa fa-th-large"></i>
+                  <a class="active" href="{{ url('/') }}"><i class="sidebar-item-icon fa fa-th-large"></i>
                       <span class="nav-label">Dashboard</span>
                   </a>
               </li>
@@ -21,19 +21,19 @@
                   <ul class="nav-2-level collapse">
                       <li>
                           <a href="{{url('/currencies/create')}}">
-                            Create Currencies</a>
+                              Create Currencies</a>
                       </li>
                       <li>
                           <a href="{{url('/currencies')}}">
-                            Manage Currencies</a>
+                              Manage Currencies</a>
                       </li>
                       <li>
                           <a href="{{url('product_categories/create')}}">
-                            Create Category</a>
+                              Create Category</a>
                       </li>
                       <li>
                           <a href="{{url('product_categories')}}">
-                            Manage Category</a>
+                              Manage Category</a>
                       </li>
                   </ul>
               </li>
@@ -43,15 +43,15 @@
                   <ul class="nav-2-level collapse">
                       <li>
                           <a href="{{url('/money_stocks/create')}}">
-                            Create Money Stock</a>
+                              Create Money Stock</a>
                       </li>
                       <li>
                           <a href="{{url('/money_stocks')}}">
-                            Manage Money Stock</a>
+                              Manage Money Stock</a>
                       </li>
                       <li>
                           <a href="{{url('/stock_balance')}}">
-                            Balance Money Stock</a>
+                              Balance Money Stock</a>
                       </li>
                   </ul>
               </li>
@@ -123,38 +123,20 @@
               </li>
               <li>
                   <a href="calendar.html"><i class="sidebar-item-icon fa fa-calendar"></i>
-                      <span class="nav-label">Calendar</span>
+                      <span class="nav-label">sales</span><i class="fa fa-angle-left arrow"></i></a>
+                  <ul class="nav-2-level collapse">
+                      <li>
+                          <a href="{{url('/orders/create')}}">Create Sales</a>
+                      </li>
+                      <li>
+                          <a href="{{url('/orders')}}">Manage Sales</a>
+                      </li>
+                  </ul>
                   </a>
               </li>
               <li>
-                  <a href="javascript:;"><i class="sidebar-item-icon fa fa-file-text"></i>
-                      <span class="nav-label">Pages</span><i class="fa fa-angle-left arrow"></i></a>
-                  <ul class="nav-2-level collapse">
-                      <li>
-                          <a href="invoice.html">Invoice</a>
-                      </li>
-                      <li>
-                          <a href="profile.html">Profile</a>
-                      </li>
-                      <li>
-                          <a href="login.html">Login</a>
-                      </li>
-                      <li>
-                          <a href="register.html">Register</a>
-                      </li>
-                      <li>
-                          <a href="lockscreen.html">Lockscreen</a>
-                      </li>
-                      <li>
-                          <a href="forgot_password.html">Forgot password</a>
-                      </li>
-                      <li>
-                          <a href="error_404.html">404 error</a>
-                      </li>
-                      <li>
-                          <a href="error_500.html">500 error</a>
-                      </li>
-                  </ul>
+                  <a href="{{ route('logout') }}"><i class="sidebar-item-icon fa fa-file-text"></i>
+                      <span class="nav-label">Logout</span></a>
               </li>
               <li>
                   <a href="javascript:;"><i class="sidebar-item-icon fa fa-sitemap"></i>

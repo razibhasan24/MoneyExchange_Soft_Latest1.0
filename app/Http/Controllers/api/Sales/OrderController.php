@@ -38,7 +38,7 @@ class OrderController extends Controller
             $details=new OrderDetail();
             $details->order_id=$order->id;
             $details->currency_id=$item['currency_id'];
-            $details->qty=$items['qty'];
+            $details->qty=$item['qty'];
             $details->rate=$item['rate'];
             $details->vat=$item['vat'];
             $details->save();

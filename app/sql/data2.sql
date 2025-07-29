@@ -39,3 +39,41 @@ VALUES
 (3, 2, 3, 400.00, 60.00),
 (4, 1, 2, 450.00, 90.00),
 (5, 3, 1, 650.00, 65.00);
+
+CREATE TABLE `core_mex_users` (
+    `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(150) NOT NULL,
+    `role_id` INT UNSIGNED NOT NULL,
+    `password` VARCHAR(255) NOT NULL,
+    `email` VARCHAR(255) NOT NULL UNIQUE,
+    `full_name` VARCHAR(255),
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `photo` VARCHAR(255),
+    `verify_code` VARCHAR(100),
+    `inactive` TINYINT(1) DEFAULT 0,
+    `mobile` VARCHAR(20),
+    `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `ip` VARCHAR(45),
+    `email_verified_at` DATETIME NULL,
+    `remember_token` VARCHAR(100)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `core_mex_users` (
+    `name`, `role_id`, `password`, `email`, `full_name`, `created_at`, `photo`, 
+    `verify_code`, `inactive`, `mobile`, `updated_at`, `ip`, `email_verified_at`, `remember_token`
+) VALUES (
+    'jdoe',              
+    2,                   
+    '$2y$10$examplehash',
+    'jdoe@example.com', 
+    'John Doe',          
+    NOW(),               
+    'profile1.jpg',      
+    'ABCD1234',        
+    0,                 
+    '+1234567890',       
+    NOW(),               
+    '192.168.1.10',    
+    NOW(),               
+    'some_random_token'  
+);

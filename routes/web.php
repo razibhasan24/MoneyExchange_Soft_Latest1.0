@@ -1,11 +1,26 @@
 <?php
 
 use App\Http\Controllers\MoneyStockController;
+use App\Http\Controllers\OAuth\OAuthController;
 use Illuminate\Support\Facades\Route;
+
+
+
+
+Route::get('register', [OAuthController::class, 'showRegister']);
+Route::post('register', [OAuthController::class, 'register'])->name('register');
+Route::get('login', [OAuthController::class, 'showLogin'])->name('login');
+Route::post('login', [OAuthController::class, 'login'])->name('login');
+
+Route::middleware('auth')->group(function () {
+    Route::get('logout', [OAuthController::class, 'logout'])->name('logout');
 
 Route::get('/', function () {
     return view('pages.Home.dashboard');
-});
+})->name('dashboard');
+
+
+
 
 Route::get('stock_balance', [MoneyStockController::class,'stock_balance'])->name('stock_balance');
 Route::resource('currencies', App\Http\Controllers\CurrencyController::class);
@@ -32,3 +47,5 @@ Route::resource('currencies', App\Http\Controllers\CurrencyController::class);
 Route::resource('currencies', App\Http\Controllers\CurrencyController::class);
 Route::resource('orders', App\Http\Controllers\OrderController::class);
 Route::resource('order_details', App\Http\Controllers\OrderDetailController::class);
+
+});
