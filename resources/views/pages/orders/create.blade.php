@@ -8,6 +8,7 @@
         width: 550px;
         height: 150px;
     }
+
     body {
         background-color: #f5f7fa;
         /* padding: 15px; */
@@ -56,51 +57,51 @@
 </style>
 
 
-    <div style="max-width: 70vw; margin: 0 auto;" class="container my-5 py-3">
-        <header class="header_all">
-    <div class="container d-flex align-items-center justify-content-between">
-        <!-- Logo -->
-        <div class="imageaa">
-            <img src="{{ asset('assets/img/logos/mex_logo.png') }}" alt="logo">
-            {{-- <img src="https://via.placeholder.com/80x60?text=Logo" alt="Company Logo" style="max-height: 60px;"> --}}
-        </div>
+<div style="max-width: 70vw; margin: 0 auto;" class="container my-5 py-3">
+    <header class="header_all">
+        <div class="container d-flex align-items-center justify-content-between">
+            <!-- Logo -->
+            <div class="imageaa">
+                <img src="{{ asset('assets/img/logos/mex_logo.png') }}" alt="logo">
+                {{-- <img src="https://via.placeholder.com/80x60?text=Logo" alt="Company Logo" style="max-height: 60px;"> --}}
+            </div>
 
-        <!-- Company Info -->
-        <div class="text-end m-title ">
-            <!-- <h1>Global Money Exchange</h1> -->
-            <h1>Global Money Exchange</h2>
+            <!-- Company Info -->
+            <div class="text-end m-title ">
+                <!-- <h1>Global Money Exchange</h1> -->
+                <h1>Global Money Exchange</h2>
+                    <p><strong>Address:</strong> 123 Business Street, Dhaka, Bangladesh</p>
+                    <p><strong>Email:</strong> support@fastsend.com</p>
+                    <p><strong>Phone:</strong> +880 1234-567890</p>
+                    <p>Fast • Secure • Worldwide Transfers</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="row g-2 mt-4">
+        <!-- Company A -->
+        <div class="col-md-6">
+            <div class="company-section h-80">
+                <h4 class="text-primary">Company A: FastSend Ltd.</h4>
+                <p><strong>Service:</strong> Money Transfer To:</p>
                 <p><strong>Address:</strong> 123 Business Street, Dhaka, Bangladesh</p>
                 <p><strong>Email:</strong> support@fastsend.com</p>
                 <p><strong>Phone:</strong> +880 1234-567890</p>
-                <p>Fast • Secure • Worldwide Transfers</p>
+            </div>
         </div>
-    </div>
-</header>
 
-<div class="row g-2 mt-4">
-    <!-- Company A -->
-    <div class="col-md-6">
-        <div class="company-section h-80">
-            <h4 class="text-primary">Company A: FastSend Ltd.</h4>
-            <p><strong>Service:</strong> Money Transfer To:</p>
-            <p><strong>Address:</strong> 123 Business Street, Dhaka, Bangladesh</p>
-            <p><strong>Email:</strong> support@fastsend.com</p>
-            <p><strong>Phone:</strong> +880 1234-567890</p>
-        </div>
-    </div>
-
-    <!-- Company B -->
-    <div class="col-md-6">
-        <div class="company-section h-80">
-            <h4 class="text-success">Company B: EuroPay Ltd.</h4>
-            <p><strong>Service:</strong> Money Transfer Form:</p>
-            <p><strong>Address:</strong> 45 Commerce Avenue, London, UK</p>
-            <p><strong>Email:</strong> contact@europay.co.uk</p>
-            <p><strong>Phone:</strong> +44 20 1234 5678</p>
+        <!-- Company B -->
+        <div class="col-md-6">
+            <div class="company-section h-80">
+                <h4 class="text-success">Company B: EuroPay Ltd.</h4>
+                <p><strong>Service:</strong> Money Transfer Form:</p>
+                <p><strong>Address:</strong> 45 Commerce Avenue, London, UK</p>
+                <p><strong>Email:</strong> contact@europay.co.uk</p>
+                <p><strong>Phone:</strong> +44 20 1234 5678</p>
+            </div>
         </div>
     </div>
 </div>
-    </div>
 
 
 
@@ -144,13 +145,34 @@
 
         <hr>
         <h5>Order details Item</h5>
+        <table class="table table-bordered" id="itemsTable">
+            <thead class="table-light">
+                <tr>
+                    <th>Currency</th>
+                    <th>Qty</th>
+                    <th>Rate</th>
+                    <th>VAT</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
 
         <div class="row mb-3">
             <div class="col-md-2">
+                <!-- <label class="form-label">Currency code</label>
                 <select class="form-select" id="currency_id">
                     <option value="USD">USD</option>
                     <option value="EUR">EUR</option>
                     <option value="INR">INR</option>
+                </select> -->
+                <!-- <label class="form-label">Currency code</label> -->
+             <input type="text" id="currency_id" class="form-control" placeholder="Currency code">
+                <select class="form-select" name="currency_id">
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="BDT">BDT</option>
                 </select>
             </div>
             <div class="col-md-2">
@@ -191,109 +213,106 @@
 </div>
 
 <script>
-    document.getElementById("todayDate").textContent = new Date().toLocaleDateString();
+    document.addEventListener("DOMContentLoaded", function() {
+        let items = [];
 
-    let items = [];
-
-    function updateItemTotal() {
-        const qty = parseFloat(document.getElementById("qty").value) || 0;
-        const rate = parseFloat(document.getElementById("rate").value) || 0;
-        const vat = parseFloat(document.getElementById("vat").value) || 0;
-        const total = (qty * rate - vat).toFixed(2);
-        document.getElementById("item_total").value = total;
-    }
-
-    document.getElementById("qty").addEventListener("input", updateItemTotal);
-    document.getElementById("rate").addEventListener("input", updateItemTotal);
-    document.getElementById("vat").addEventListener("input", updateItemTotal);
-
-    document.getElementById("addItemBtn").addEventListener("click", () => {
-        const currency_id = document.getElementById("currency_id").value;
-        const qty = parseFloat(document.getElementById("qty").value);
-        const rate = parseFloat(document.getElementById("rate").value);
-        const vat = parseFloat(document.getElementById("vat").value);
-        const total = qty * rate - vat;
-
-        if (!currency_id || isNaN(qty) || isNaN(rate)) {
-            alert("Fill all item fields");
-            return;
+        function updateItemTotal() {
+            const qty = parseFloat(document.getElementById("qty").value) || 0;
+            const rate = parseFloat(document.getElementById("rate").value) || 0;
+            const vat = parseFloat(document.getElementById("vat").value) || 0;
+            const total = (qty * rate - vat).toFixed(2);
+            document.getElementById("item_total").value = total;
         }
 
-        items.push({
-            currency_id,
-            qty,
-            rate,
-            vat,
-            total
-        });
-        renderItems();
-        updateOrderTotal();
+        document.getElementById("qty").addEventListener("input", updateItemTotal);
+        document.getElementById("rate").addEventListener("input", updateItemTotal);
+        document.getElementById("vat").addEventListener("input", updateItemTotal);
 
-        // Clear inputs
-        document.getElementById("qty").value = "";
-        document.getElementById("rate").value = "";
-        document.getElementById("vat").value = "";
-        document.getElementById("item_total").value = "";
-    });
+        document.getElementById("addItemBtn").addEventListener("click", () => {
+            const currency_id = document.getElementById("currency_id").value;
+            const qty = parseFloat(document.getElementById("qty").value);
+            const rate = parseFloat(document.getElementById("rate").value);
+            const vat = parseFloat(document.getElementById("vat").value);
+            const total = qty * rate - vat;
 
-    function renderItems() {
-        const tbody = document.querySelector("#itemsTable tbody");
-        tbody.innerHTML = "";
+            if (!currency_id || isNaN(qty) || isNaN(rate)) {
+                alert("Fill all item fields");
+                return;
+            }
 
-        items.forEach((item, index) => {
-            tbody.innerHTML += `
-          <tr>
-            <td>${item.currency_id}</td>
-            <td>${item.qty}</td>
-            <td>${item.rate}</td>
-            <td>${item.vat}</td>
-            <td>${item.total.toFixed(2)}</td>
-            <td><button type="button" class="btn btn-danger btn-sm" onclick="removeItem(${index})">Remove</button></td>
-          </tr>
-        `;
-        });
-    }
-
-    function removeItem(index) {
-        items.splice(index, 1);
-        renderItems();
-        updateOrderTotal();
-    }
-
-    function updateOrderTotal() {
-        const total = items.reduce((sum, item) => sum + item.total, 0);
-        document.getElementById("order_total").value = total.toFixed(2);
-    }
-
-    document.getElementById("orderForm").addEventListener("submit", function(e) {
-        e.preventDefault();
-        const formData = new FormData(this);
-        const data = Object.fromEntries(formData.entries());
-        data.order_total = parseFloat(data.order_total);
-        data.paid_amount = parseFloat(data.paid_amount);
-        data.items = items;
-
-        console.log("Submitting data:", data);
-
-        // Replace with your real API endpoint
-        fetch("/api/create-order", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(data),
-            })
-            .then((res) => res.json())
-            .then((response) => {
-                alert("Order submitted successfully!");
-                location.reload();
-            })
-            .catch((error) => {
-                alert("Error submitting order.");
-                console.error(error);
+            items.push({
+                currency_id,
+                qty,
+                rate,
+                vat,
+                total
             });
+            renderItems();
+            updateOrderTotal();
+
+            // Clear inputs
+            document.getElementById("qty").value = "";
+            document.getElementById("rate").value = "";
+            document.getElementById("vat").value = "";
+            document.getElementById("item_total").value = "";
+        });
+
+        function renderItems() {
+            const tbody = document.querySelector("#itemsTable tbody");
+            tbody.innerHTML = "";
+
+            items.forEach((item, index) => {
+                tbody.innerHTML += `
+                <tr>
+                    <td>${item.currency_id}</td>
+                    <td>${item.qty}</td>
+                    <td>${item.rate}</td>
+                    <td>${item.vat}</td>
+                    <td>${item.total.toFixed(2)}</td>
+                    <td><button type="button" class="btn btn-danger btn-sm" onclick="removeItem(${index})">Remove</button></td>
+                </tr>
+            `;
+            });
+        }
+
+        window.removeItem = function(index) {
+            items.splice(index, 1);
+            renderItems();
+            updateOrderTotal();
+        }
+
+        function updateOrderTotal() {
+            const total = items.reduce((sum, item) => sum + item.total, 0);
+            document.getElementById("order_total").value = total.toFixed(2);
+        }
+
+        document.getElementById("orderForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+            data.order_total = parseFloat(data.order_total);
+            data.items = items;
+
+            fetch("/api/create-order", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data),
+                })
+                .then((res) => res.json())
+                .then((response) => {
+                    alert("Order submitted successfully!");
+                    location.reload();
+                })
+                .catch((error) => {
+                    alert("Error submitting order.");
+                    console.error(error);
+                });
+        });
     });
 </script>
+
 
 
 

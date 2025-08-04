@@ -12,4 +12,9 @@ class MoneyReceipt extends Model
     }
     protected $table = 'money_receipts';
 
+    public function stocks()
+{
+    return $this->hasMany(MoneyStock::class, 'receipt_id'); 
+}
+
 }

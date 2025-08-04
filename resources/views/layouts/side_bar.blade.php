@@ -38,6 +38,18 @@
                   </ul>
               </li>
               <li>
+                  <a href="javascript:;"><i class="sidebar-item-icon fa fa-product-hunt"></i>
+                      <span class="nav-label">Purchase</span><i class="fa fa-angle-left arrow"></i></a>
+                  <ul class="nav-2-level collapse">
+                      <li>
+                          <a href="{{url('/purchases/create')}}">Create Purchase</a>
+                      </li>
+                      <li>
+                          <a href="{{url('/purchases')}}">Manage Purchase</a>
+                      </li>
+                  </ul>
+              </li>
+              <li>
                   <a href="javascript:;"><i class="sidebar-item-icon fa fa-university"></i>
                       <span class="nav-label">Money Stock</span><i class="fa fa-angle-left arrow"></i></a>
                   <ul class="nav-2-level collapse">
@@ -55,6 +67,38 @@
                       </li>
                   </ul>
               </li>
+              <li>
+                  <a href="calendar.html"><i class="sidebar-item-icon fa fa-calendar"></i>
+                      <span class="nav-label">sales</span><i class="fa fa-angle-left arrow"></i></a>
+                  <ul class="nav-2-level collapse">
+                      <li>
+                          <a href="{{url('/orders/create')}}">Create Sales</a>
+                      </li>
+                      <li>
+                          <a href="{{url('/orders')}}">Manage Sales</a>
+                      </li>
+                  </ul>
+                  </a>
+              </li>
+              <li>
+                  <a href="javascript:;"><i class="sidebar-item-icon fa fa-gg-circle"></i>
+                      <span class="nav-label">Accounts</span><i class="fa fa-angle-left arrow"></i></a>
+                  <ul class="nav-2-level collapse">
+                      <li>
+                          <a href="{{url('/money_receipts/create')}}">Create MR</a>
+                      </li>
+                      <li>
+                          <a href="{{url("/money_receipts")}}">Manage MR</a>
+                      </li>
+                      <li>
+                          <a href="{{url('/invoices/create')}}">Create Invoice</a>
+                      </li>
+                      <li>
+                          <a href="{{ url('/invoices') }}">Manage Invoice</a>
+                      </li>
+                  </ul>
+              </li>
+
               <li>
                   <a href="javascript:;"><i class="sidebar-item-icon fa fa-credit-card"></i>
                       <span class="nav-label">Transactions</span><i class="fa fa-angle-left arrow"></i></a>
@@ -77,68 +121,31 @@
                       <li>
                           <a href="{{ url('/payments') }}">Manage Payments</a>
                       </li>
-                      <li>
+                      <!-- <li>
                           <a href="chartjs.html">Chart.js</a>
                       </li>
                       <li>
                           <a href="charts_sparkline.html">Sparkline Charts</a>
-                      </li>
+                      </li> -->
                   </ul>
               </li>
               <li>
-                  <a href="javascript:;"><i class="sidebar-item-icon fa fa-product-hunt"></i>
-                      <span class="nav-label">Purchase</span><i class="fa fa-angle-left arrow"></i></a>
+                  <a href="javascript:;"><i class="sidebar-item-icon fa fa-paypal"></i>
+                      <span class="nav-label">Customers</span><i class="fa fa-angle-left arrow"></i></a>
                   <ul class="nav-2-level collapse">
                       <li>
-                          <a href="{{url('/purchases/create')}}">Create Purchase</a>
+                          <a href="{{url('/customers/create')}}">Create Customer</a>
                       </li>
                       <li>
-                          <a href="{{url('/purchases')}}">Manage Purchase</a>
+                          <a href="{{ url('/customers') }}">Manage Customer</a>
                       </li>
-                  </ul>
-              </li>
-              {{-- <li>
-                  <a href="icons.html"><i class="sidebar-item-icon fa fa-smile-o"></i>
-                      <span class="nav-label">Icons</span>
-                  </a>
-              </li>
-              <li class="heading">PAGES</li> --}}
-              <li>
-                  <a href="javascript:;"><i class="sidebar-item-icon fa fa-gg-circle"></i>
-                      <span class="nav-label">Accounts</span><i class="fa fa-angle-left arrow"></i></a>
-                  <ul class="nav-2-level collapse">
+
                       <li>
-                          <a href="{{url('/money_receipts/create')}}">Create MR</a>
+                          <a href="{{ route('logout') }}"><i class="sidebar-item-icon fa fa-file-text"></i>
+                              <span class="nav-label">Logout</span></a>
                       </li>
-                      <li>
-                          <a href="{{url("/money_receipts")}}">Manage MR</a>
-                      </li>
-                      <li>
-                          <a href="{{url('/invoices/create')}}">Create Invoice</a>
-                      </li>
-                      <li>
-                          <a href="{{ url('/invoices') }}">Manage Invoice</a>
-                      </li>
-                  </ul>
-              </li>
-              <li>
-                  <a href="calendar.html"><i class="sidebar-item-icon fa fa-calendar"></i>
-                      <span class="nav-label">sales</span><i class="fa fa-angle-left arrow"></i></a>
-                  <ul class="nav-2-level collapse">
-                      <li>
-                          <a href="{{url('/orders/create')}}">Create Sales</a>
-                      </li>
-                      <li>
-                          <a href="{{url('/orders')}}">Manage Sales</a>
-                      </li>
-                  </ul>
-                  </a>
-              </li>
-              <li>
-                  <a href="{{ route('logout') }}"><i class="sidebar-item-icon fa fa-file-text"></i>
-                      <span class="nav-label">Logout</span></a>
-              </li>
-              <li>
+                      <!-- <li>
+
                   <a href="javascript:;"><i class="sidebar-item-icon fa fa-sitemap"></i>
                       <span class="nav-label">Menu Levels</span><i class="fa fa-angle-left arrow"></i></a>
                   <ul class="nav-2-level collapse">
@@ -158,7 +165,9 @@
                           </ul>
                       </li>
                   </ul>
-              </li>
-          </ul>
+              </li> -->
+
+
+                  </ul>
       </div>
   </nav>

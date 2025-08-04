@@ -8,6 +8,8 @@ class PurchaseDetail extends Model
 {
     protected $table = 'purchase_details';
 
+    public $timestamps=false;
+
     protected $fillable = [
         'purchase_id',
         'currency_id',

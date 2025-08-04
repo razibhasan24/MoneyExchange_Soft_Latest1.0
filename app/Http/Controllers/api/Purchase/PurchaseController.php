@@ -3,83 +3,169 @@
 namespace App\Http\Controllers\api\Purchase;
 
 use App\Http\Controllers\Controller;
-use App\Models\MoneyStock;
 use App\Models\Purchase;
 use App\Models\PurchaseDetail;
+use App\Models\MoneyStock;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PurchaseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // ✅ 1. List all purchases
     public function index()
     {
-        //
+        $purchases = Purchase::with(['details', 'stocks'])->get();
+        return response()->json($purchases);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // ✅ 2. Store a new purchase
     public function store(Request $request)
     {
-        
-        $purchase =new Purchase();
-        $purchase->agent_id=$request->agent_id;
-        $purchase->status_id = $request->status_id;
-        $purchase->purchase_date=$request->purchase_date;
-        $purchase->remarks=$request->remarks;
-        $purchase->purchase_total=$request->purchase_total;
-        $purchase->save();
+        $validated = $request->validate([
+            'agent_id' => 'required|integer',
+            'status_id' => 'required|integer',
+            'purchase_date' => 'required|date',
+            'remarks' => 'nullable|string',
+            'purchase_total' => 'required|numeric',
+            'items' => 'required|array|min:1',
+            'items.*.currency_id' => 'required|integer',
+            'items.*.qty' => 'required|numeric|min:0',
+            'items.*.rate' => 'required|numeric|min:0',
+            'items.*.vat' => 'required|numeric|min:0',
+        ]);
 
+        DB::beginTransaction();
 
-         $items=$request->items;
+        try {
+            $purchase = Purchase::create([
+                'agent_id' => $request->agent_id,
+                'status_id' => $request->status_id,
+                'purchase_date' => $request->purchase_date,
+                'remarks' => $request->remarks,
+                'purchase_total' => $request->purchase_total,
+            ]);
 
-       foreach ($items as $item) {
-        $details=new PurchaseDetail();
-        $details->purchase_id=$purchase->id;
-        $details->currency_id=$item['currency_id'];
-        $details->qty=$item['qty'];
-        $details->rate=$item['rate'];
-        $details->vat=$item['vat'];
-        $details->save();
+            foreach ($request->items as $item) {
+                $purchase->details()->create([
+                    'currency_id' => $item['currency_id'],
+                    'qty' => $item['qty'],
+                    'rate' => $item['rate'],
+                    'vat' => $item['vat'],
+                ]);
 
+                $purchase->stocks()->create([
+                    'currency_id' => $item['currency_id'],
+                    'qty' => $item['qty'],
+                    'transaction_type' => 'IN',
+                    'remarks' => 'Purchase',
+                ]);
+            }
 
-        $stocks=new MoneyStock();
-        $stocks->purchase_id=$purchase->id;
-        $stocks->currency_id=$item['currency_id'];
-        $stocks->qty=$item['qty'];
-        $stocks->transaction_type="IN";
-        $stocks->remarks='Purchase';
-        $stocks->save();
+            DB::commit();
+            return response()->json($purchase->load('details', 'stocks'), 201);
 
-      }
-
-
-       return response()->json($purchase);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
+    // ✅ 3. Show a single purchase
     public function show(string $id)
     {
-        //
+        $purchase = Purchase::with(['details', 'stocks'])->find($id);
+
+        if (!$purchase) {
+            return response()->json(['message' => 'Purchase not found'], 404);
+        }
+
+        return response()->json($purchase);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    // ✅ 4. Update a purchase
     public function update(Request $request, string $id)
     {
-        //
+        $purchase = Purchase::find($id);
+
+        if (!$purchase) {
+            return response()->json(['message' => 'Purchase not found'], 404);
+        }
+
+        $validated = $request->validate([
+            'agent_id' => 'required|integer',
+            'status_id' => 'required|integer',
+            'purchase_date' => 'required|date',
+            'remarks' => 'nullable|string',
+            'purchase_total' => 'required|numeric',
+            'items' => 'required|array|min:1',
+            'items.*.currency_id' => 'required|integer',
+            'items.*.qty' => 'required|numeric|min:0',
+            'items.*.rate' => 'required|numeric|min:0',
+            'items.*.vat' => 'required|numeric|min:0',
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            $purchase->update([
+                'agent_id' => $request->agent_id,
+                'status_id' => $request->status_id,
+                'purchase_date' => $request->purchase_date,
+                'remarks' => $request->remarks,
+                'purchase_total' => $request->purchase_total,
+            ]);
+
+            // পুরানো details ও stocks ডিলিট করে নতুনটি সংরক্ষণ
+            $purchase->details()->delete();
+            $purchase->stocks()->delete();
+
+            foreach ($request->items as $item) {
+                $purchase->details()->create([
+                    'currency_id' => $item['currency_id'],
+                    'qty' => $item['qty'],
+                    'rate' => $item['rate'],
+                    'vat' => $item['vat'],
+                ]);
+
+                $purchase->stocks()->create([
+                    'currency_id' => $item['currency_id'],
+                    'qty' => $item['qty'],
+                    'transaction_type' => 'IN',
+                    'remarks' => 'Purchase (Updated)',
+                ]);
+            }
+
+            DB::commit();
+            return response()->json($purchase->load('details', 'stocks'));
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // ✅ 5. Delete a purchase
     public function destroy(string $id)
     {
-        //
+        $purchase = Purchase::find($id);
+
+        if (!$purchase) {
+            return response()->json(['message' => 'Purchase not found'], 404);
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $purchase->details()->delete();
+            $purchase->stocks()->delete();
+            $purchase->delete();
+
+            DB::commit();
+            return response()->json(['message' => 'Purchase deleted successfully']);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 }

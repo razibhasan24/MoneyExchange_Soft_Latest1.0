@@ -6,28 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Purchase extends Model
 {
-    protected $table = 'purchases';
+    protected $fillable = ['agent_id', 'status_id', 'purchase_date', 'remarks', 'purchase_total'];
 
-    protected $fillable = [
-        'agent_id',
-        'purchase_date',
-        'remarks',
-        'purchase_total',
-        'status_id'
-    ];
+    public $timestamps = false;
 
-    public function agent()
+    // ➤ Add this to fix the error
+    public function stocks()
     {
-        return $this->belongsTo(Agent::class);
-    }
-
-    public function status()
-    {
-        return $this->belongsTo(Status::class);
+        return $this->hasMany(MoneyStock::class);
     }
 
     public function details()
     {
-        return $this->hasMany(PurchaseDetail::class, 'purchase_id');
+        return $this->hasMany(PurchaseDetail::class);
     }
 }

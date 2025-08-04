@@ -439,7 +439,7 @@
         };
         console.log(data);
         try {
-            const res = await fetch('http://razib.intelsofts.com/projects/laravel/mex/public/api/purchases', {
+            const res = await fetch('http://127.0.0.1:8000/api/purchases', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
