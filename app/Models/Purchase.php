@@ -20,4 +20,12 @@ class Purchase extends Model
     {
         return $this->hasMany(PurchaseDetail::class);
     }
+    public function agent()
+    {
+        return $this->belongsTo(Agent::class);  
+    }
+    public function status()
+    {
+        return $this->belongsTo(Status::class); 
+    }
 }

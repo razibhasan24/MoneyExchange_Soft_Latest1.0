@@ -59,37 +59,94 @@ class CustomerController extends Controller
     /**
      * Update the specified customer in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        $customer = Customer::find($id);
+ public function store(Request $request)
+        {
+            $request->validate([
+                'name' => 'required|string',
+                'id_type' => 'required|string',
+                'id_number' => 'required|string',
+                'phone' => 'required|string',
+                'address' => 'required|string',
+                'id_proof_document' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048'
+            ]);
 
-        if (!$customer) {
-            return response()->json(['message' => 'Customer not found'], 404);
-        }
+            $filename = null;
 
-        $validated = $request->validate([
-            'name' => 'sometimes|required|string|max:255',
-            'id_type' => 'sometimes|required|string|max:100',
-            'id_number' => 'sometimes|required|string|max:100|unique:customers,id_number,' . $customer->id,
-            'phone' => 'sometimes|required|string|max:20',
-            'address' => 'sometimes|required|string',
-            'id_proof_document' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
-        ]);
-
-        if ($request->hasFile('id_proof_document')) {
-            // Delete old file if exists
-            if ($customer->id_proof_document) {
-                Storage::disk('public')->delete($customer->id_proof_document);
+            if ($request->hasFile('id_proof_document')) {
+                $file = $request->file('id_proof_document');
+                $filename = time().'_'.$file->getClientOriginalName();
+                $file->move(public_path('uploads'), $filename);
             }
 
-            $path = $request->file('id_proof_document')->store('id_proofs', 'public');
-            $validated['id_proof_document'] = $path;
+            $customer = new Customer();
+            $customer->name = $request->name;
+            $customer->id_type = $request->id_type;
+            $customer->id_number = $request->id_number;
+            $customer->phone = $request->phone;
+            $customer->address = $request->address;
+            $customer->id_proof_document = $filename;
+            $customer->save();
+
+            return response()->json($customer, 201);
         }
 
-        $customer->update($validated);
 
-        return response()->json($customer);
-    }
+//     public function update(Request $request, string $id)
+//     {
+//         $customer = Customer::find($id);
+
+//         if (!$customer) {
+//             return response()->json(['message' => 'Customer not found'], 404);
+//         }
+
+//         $validated = $request->validate([
+//             'name' => 'sometimes|required|string|max:255',
+//             'id_type' => 'sometimes|required|string|max:100',
+//             'id_number' => 'sometimes|required|string|max:100|unique:customers,id_number,' . $customer->id,
+//             'phone' => 'sometimes|required|string|max:20',
+//             'address' => 'sometimes|required|string',
+//             'id_proof_document' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+//         ]);
+
+//         if ($request->hasFile('id_proof_document')) {
+//             // Delete old file if exists
+//             if ($customer->id_proof_document) {
+//                 Storage::disk('public')->delete($customer->id_proof_document);
+//             }
+
+//             $path = $request->file('id_proof_document')->store('id_proofs', 'public');
+//             $validated['id_proof_document'] = $path;
+//         }
+
+//         $customer->update($validated);
+
+//         return response()->json($customer);
+//     }
+//    public function update(Request $request, $id)
+//     {
+//             $customer = Customer::findOrFail($id);
+
+//             $customer->name = $request->name;
+//             $customer->id_type = $request->id_type;
+//             $customer->id_number = $request->id_number;
+//             $customer->phone = $request->phone;
+//             $customer->address = $request->address;
+
+//             // Optional file update
+//             if ($request->hasFile('id_proof_document')) {
+//                 $file = $request->file('id_proof_document');
+//                 $filename = time().'_'.$file->getClientOriginalName();
+//                 $file->move(public_path('uploads'), $filename);
+//                 $customer->id_proof_document = $filename;
+//             }
+
+//             $customer->save();
+
+//             return response()->json($customer, 200);
+//         }
+
+
+
 
     /**
      * Remove the specified customer from storage.

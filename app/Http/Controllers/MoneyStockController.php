@@ -7,21 +7,16 @@ use Illuminate\Http\Request;
 use App\Models\Currency;
 use App\Models\Purchase;
 
-
 class MoneyStockController extends Controller
-
 {
-    //stock balance
-    public function stock_balance()
+      public function stock_balance()
     {
-        // Get all MoneyStock records with their related currency
         $stocks = MoneyStock::with('currency')->get();
 
-        // Group by currency_id and sum qty
         $groupedStocks = $stocks->groupBy('currency_id')->map(function ($group) {
             return [
                 'currency_id' => $group->first()->currency_id,
-                'currency_name' => optional($group->first()->currency)->currency_name, // safe access
+                'currency_name' => optional($group->first()->currency)->currency_name,
                 'qty' => $group->sum('qty'),
             ];
         });
@@ -29,24 +24,23 @@ class MoneyStockController extends Controller
         return view('pages.money_stocks.balance', ['groupedStocks' => $groupedStocks]);
     }
 
-
     public function index()
     {
-        $money_stocks = MoneyStock::orderBy('id', 'DESC')->paginate(10);
-        return view('pages.money_stocks.index', compact('money_stocks'));
+        $moneyStocks = MoneyStock::orderBy('id', 'DESC')->paginate(10);
+        return view('pages.money_stocks.index', compact('moneyStocks'));
     }
 
     public function create()
     {
         $currencies = Currency::all();
         $purchases = Purchase::all();
+        $moneyStock = new MoneyStock();
 
-        return view('pages.money_stocks.create', [
+        return view('pages.money_stocks.form', [
             'mode' => 'create',
-            'moneyStock' => new MoneyStock(),
+            'moneyStock' => $moneyStock,
             'currencies' => $currencies,
             'purchases' => $purchases,
-
         ]);
     }
 
@@ -60,11 +54,6 @@ class MoneyStockController extends Controller
         return redirect()->route('money_stocks.index')->with('success', 'Successfully created!');
     }
 
-    public function show(MoneyStock $moneyStock)
-    {
-        return view('pages.money_stocks.view', compact('moneyStock'));
-    }
-
     public function edit(MoneyStock $moneyStock)
     {
         $currencies = Currency::all();
@@ -75,7 +64,6 @@ class MoneyStockController extends Controller
             'moneyStock' => $moneyStock,
             'currencies' => $currencies,
             'purchases' => $purchases,
-
         ]);
     }
 

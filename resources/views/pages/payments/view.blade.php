@@ -30,20 +30,46 @@
                     <th>Id</th>
                     <td>{{ $payment->id ?? 'N/A' }}</td>
                 </tr>                <tr>
+                    <th>User id</th>
+                    <td>{{ $payment->user->name ?? $payment->user_id }}</td>
+                </tr>                <tr>
+                    <th>Amount</th>
+                    <td>{{ $payment->amount ?? 'N/A' }}</td>
+                </tr>                <tr>
+                    <th>Currency</th>
+                    <td>{{ $payment->currency ?? 'N/A' }}</td>
+                </tr>                <tr>
                     <th>Transaction id</th>
                     <td>{{ $payment->transaction->name ?? $payment->transaction_id }}</td>
                 </tr>                <tr>
                     <th>Payment method</th>
                     <td>{{ $payment->payment_method ?? 'N/A' }}</td>
                 </tr>                <tr>
-                    <th>Payment reference</th>
-                    <td>{{ $payment->payment_reference ?? 'N/A' }}</td>
+                    <th>Payment status</th>
+                    <td>{{ $payment->payment_status ?? 'N/A' }}</td>
                 </tr>                <tr>
                     <th>Payment date</th>
                     <td>{{ $payment->payment_date ?? 'N/A' }}</td>
                 </tr>                <tr>
-                    <th>Payment document</th>
-                    <td>{{ $payment->payment_document ?? 'N/A' }}</td>
+                    <th>Invoice no</th>
+                    <td>{{ $payment->invoice_no ?? 'N/A' }}</td>
+                </tr>                <tr>
+                    <th>Description</th>
+                    <td>{{ $payment->description ?? 'N/A' }}</td>
+                </tr>                <tr>
+                    <th>Created at</th>
+                    <td>{{ $payment->created_at ?? 'N/A' }}</td>
+                </tr>                <tr>
+                    <th>Updated at</th>
+                    <td>{{ $payment->updated_at ?? 'N/A' }}</td>
+                </tr>                <tr>
+                    <th>Created At</th>
+
+                    <td>{{ $modelVar->created_at->format('M d, Y h:i A') }}</td>
+                </tr>                <tr>
+                    <th>Updated At</th>
+
+                    <td>{{ $modelVar->updated_at->format('M d, Y h:i A') }}</td>
                 </tr>
                         </tbody>
                     </table>

@@ -6,6 +6,7 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Models\Customer;
 use App\Models\Status;
+use App\Models\Currency;
 
 
 class OrderController extends Controller
@@ -20,12 +21,14 @@ class OrderController extends Controller
     {
         $customers = \App\Models\Customer::all();
         $statuses = \App\Models\Status::all();
+        $currencies=\App\Models\Currency::all();
 
         return view('pages.orders.create', [
             'mode' => 'create',
             'order' => new Order(),
             'customers' => $customers,
             'statuses' => $statuses,
+            'currencies'=>$currencies,
 
         ]);
     }
@@ -40,11 +43,10 @@ class OrderController extends Controller
         return redirect()->route('orders.index')->with('success', 'Successfully created!');
     }
 
-    public function show(Order $order)
-    {
-        return view('pages.orders.view', compact('order'));
-    }
-
+public function show(Order $order)
+{
+    return view('pages.orders.view', compact('order'));
+}
     public function edit(Order $order)
     {
         $customers = \App\Models\Customer::all();

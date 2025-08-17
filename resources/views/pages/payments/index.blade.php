@@ -61,10 +61,10 @@
         <!-- Table -->
         <div class="table-responsive rounded-3">
             <table class="table table-hover">
-                <thead class="table-primary"><tr><th>Id</th><th>Transaction id</th><th>Payment method</th><th>Payment reference</th><th>Payment date</th><th>Payment document</th><th>Actions</th></tr></thead>
+                <thead class="table-primary"><tr><th>Id</th><th>User id</th><th>Amount</th><th>Currency</th><th>Transaction id</th><th>Payment method</th><th>Payment status</th><th>Payment date</th><th>Invoice no</th><th>Description</th><th>Created at</th><th>Updated at</th><th>Actions</th></tr></thead>
                 <tbody>
                 @foreach ($payments as $item)
-                    <tr><td>{{ $item->id }}</td><td>{{ optional($item->transaction)->name ?? $item->transaction_id }}</td><td>{{ $item->payment_method }}</td><td>{{ $item->payment_reference }}</td><td>{{ $item->payment_date }}</td><td>{{ $item->payment_document }}</td><td style="min-width:220px">
+                    <tr><td>{{ $item->id }}</td><td>{{ optional($item->user)->name ?? $item->user_id }}</td><td>{{ $item->amount }}</td><td>{{ $item->currency }}</td><td>{{ optional($item->transaction)->name ?? $item->transaction_id }}</td><td>{{ $item->payment_method }}</td><td>{{ $item->payment_status }}</td><td>{{ $item->payment_date }}</td><td>{{ $item->invoice_no }}</td><td>{{ $item->description }}</td><td>{{ $item->created_at }}</td><td>{{ $item->updated_at }}</td><td style="min-width:220px">
     <a href="{{ route('payments.show', $item->id) }}" class="btn btn-sm btn-info">View</a>
     <a href="{{ route('payments.edit', $item->id) }}" class="btn btn-sm btn-warning">Edit</a>
     <form action="{{ route('payments.destroy', $item->id) }}" method="POST" style="display:inline;">

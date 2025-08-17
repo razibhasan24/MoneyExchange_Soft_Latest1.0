@@ -3,6 +3,7 @@
 use App\Http\Controllers\MoneyStockController;
 use App\Http\Controllers\OAuth\OAuthController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PaymentController;
 
 
 
@@ -18,6 +19,15 @@ Route::middleware('auth')->group(function () {
 Route::get('/', function () {
     return view('pages.Home.dashboard');
 })->name('dashboard');
+
+
+
+
+
+Route::get('/checkout', [PaymentController::class, 'checkout'])->name('checkout');
+Route::get('/payment-success', [PaymentController::class, 'success'])->name('payment.success');
+Route::get('/payment-cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');
+
 
 
 
@@ -49,3 +59,4 @@ Route::resource('orders', App\Http\Controllers\OrderController::class);
 Route::resource('order_details', App\Http\Controllers\OrderDetailController::class);
 
 });
+Route::resource('payments', App\Http\Controllers\PaymentController::class);
