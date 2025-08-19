@@ -13,6 +13,23 @@
                   <a class="active" href="{{ url('/') }}"><i class="sidebar-item-icon fa fa-th-large"></i>
                       <span class="nav-label">Dashboard</span>
                   </a>
+                  <!-- <ul class="nav-2-level collapse">
+                      <li>
+                          <a href="{{url('/summary')}}">
+                              Summary</a>
+                      </li>
+                  </ul> -->
+              </li>
+              <li>
+                  <a class="active" href="{{ url('summary') }}"><i class="sidebar-item-icon fa fa-th-large"></i>
+                      <span class="nav-label">Summary</span>
+                  </a>
+                  <!-- <ul class="nav-2-level collapse">
+                      <li>
+                          <a href="{{url('/summary')}}">
+                              Summary</a>
+                      </li>
+                  </ul> -->
               </li>
               <li class="heading">FEATURES</li>
               <li>
@@ -88,7 +105,7 @@
                           <a href="{{url('/money_receipts/create')}}">Create MR</a>
                       </li>
                       <li>
-                          <a href="{{url("/money_receipts")}}">Manage MR</a>
+                          <a href="{{url('/money_receipts')}}">Manage MR</a>
                       </li>
                       <li>
                           <a href="{{url('/invoices/create')}}">Create Invoice</a>

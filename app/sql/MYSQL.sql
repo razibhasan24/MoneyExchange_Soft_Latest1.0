@@ -7,7 +7,6 @@
 
 CREATE DATABASE IF NOT EXISTS test;
 USE test;
-
 --
 -- Temporary table structure for view `v_product_list1`
 --

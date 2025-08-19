@@ -5,6 +5,11 @@ use App\Http\Controllers\OAuth\OAuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PaymentController;
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SummaryController;
+
+Route::get('summary', [SummaryController::class, 'index'])->name('dashboard');
+
 
 
 
@@ -19,6 +24,11 @@ Route::middleware('auth')->group(function () {
 Route::get('/', function () {
     return view('pages.Home.dashboard');
 })->name('dashboard');
+
+// Route::get('summary', function () {
+//     return view('pages.Summary.summary');
+// })->name('dashboard');
+
 
 
 
