@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,24 +14,25 @@
         <div class="col-md-6 col-lg-5 shadow p-4 rounded bg-white">
             <h2 class="text-center mb-4">Sign In</h2>
             @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul class="mb-0">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
             @endif
             <form action="{{ route('login') }}" method="POST">
                 @csrf
                 <div class="mb-3">
                     <label for="email" class="form-label">Email address</label>
-                    <input type="email" id="email" name="email" class="form-control" required value="razibhasan@gmail.com">
+                    <input type="email" id="email" name="email" class="form-control" required
+                        value="razibhasan@gmail.com">
                 </div>
 
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" id="password" name="password" class="form-control" required value="111111">
+                    <input type="password" id="password" name="password" class="form-control" required value="1111111">
                 </div>
 
                 <div class="mb-3 form-check">

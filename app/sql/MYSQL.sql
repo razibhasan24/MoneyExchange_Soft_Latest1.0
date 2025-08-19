@@ -3149,8 +3149,8 @@ INSERT INTO `core_mex_money_receipts` (
 DROP TABLE IF EXISTS `core_mex_money_receipt_details`;
 CREATE TABLE `core_mex_money_receipt_details` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `receipt_id` int(11) NOT NULL DEFAULT 0,
-  `currency_id` int(10) unsigned NOT NULL DEFAULT 0,
+  `receipt_id` int(11) NOT NULL DEFAULT ,
+  `currency_id` int(10) unsigned NOT NULL DEFAULT ,
   `amount` decimal(18,2) NOT NULL,
   `exchange_rate` decimal(18,6) DEFAULT NULL,
   `equivalent_amount` decimal(18,2) DEFAULT NULL,

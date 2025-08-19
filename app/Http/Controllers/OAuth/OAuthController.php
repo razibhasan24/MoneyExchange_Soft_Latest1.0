@@ -50,7 +50,7 @@ class OAuthController extends Controller
             return redirect()->intended('dashboard');
         }
         return back()->withErrors([
-            'email' => 'Invalid Credentials!',
+            'email' => 'Please Enter Your Valid Email !',
         ]);
     }
 

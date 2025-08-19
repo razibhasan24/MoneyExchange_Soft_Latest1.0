@@ -440,14 +440,15 @@ body {
         };
 
         try {
-            const response = await fetch('http://localhost:8000/api/purchases', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                },
-                body: JSON.stringify(data)
-            });
+            const response = await fetch(
+                'http://razib.intelsofts.com/projects/laravel/mex/public/api/purchases', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
 
             if (!response.ok) {
                 const errorData = await response.json();

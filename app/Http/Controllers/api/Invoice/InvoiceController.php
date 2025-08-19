@@ -52,6 +52,33 @@ class InvoiceController extends Controller
         return response()->json($invoice, 201);
     }
 
+//     public function store(Request $request)
+// {
+//     $request->validate([
+//         'customer_id'   => 'required|integer|exists:customers,id',
+//         'invoice_date'  => 'required|date',
+//         'total_amount'  => 'required|numeric',
+//         'status'        => 'required|integer',
+//         'items'         => 'required|array|min:1',
+//         'items.*.description' => 'required|string',
+//         'items.*.qty'         => 'required|numeric',
+//         'items.*.rate'        => 'required|numeric',
+//         'items.*.vat'         => 'required|numeric',
+//         'items.*.total'       => 'required|numeric',
+//     ]);
+
+//     // Example: create invoice
+//     $invoice = Invoice::create($request->only(['customer_id', 'invoice_date', 'total_amount', 'status']));
+
+//     // Attach items (if you have relationship setup)
+//     foreach ($request->items as $item) {
+//         $invoice->items()->create($item);
+//     }
+
+//     return response()->json(['invoice' => $invoice], 201);
+// }
+
+
     /**
      * Display the specified resource.
      */

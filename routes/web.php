@@ -4,9 +4,9 @@ use App\Http\Controllers\MoneyStockController;
 use App\Http\Controllers\OAuth\OAuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PaymentController;
-
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SummaryController;
+
+
 
 Route::get('summary', [SummaryController::class, 'index'])->name('dashboard');
 
